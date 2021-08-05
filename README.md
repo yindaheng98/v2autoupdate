@@ -1,0 +1,2 @@
+# v2autosub
+自动获取vmess订阅信息、测量连接情况、并生成单outbound或多outbound负载均衡配置文件
