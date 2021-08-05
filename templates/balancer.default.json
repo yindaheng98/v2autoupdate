@@ -1,0 +1,63 @@
+{
+  "inbounds": [
+    {
+      "port": 1080,
+      "listen": "0.0.0.0",
+      "protocol": "socks",
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls"
+        ]
+      },
+      "settings": {
+        "auth": "noauth",
+        "udp": true
+      }
+    }
+  ],
+  "outbounds": [
+    ${OUTBOUNDS}
+    {
+      "tag": "direct",
+      "protocol": "freedom",
+      "settings": {}
+    }
+  ],
+  "routing": {
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "type": "field",
+        "balancerTag": "default-balancer",
+        "domain": [
+          "!geosite:cn"
+        ]
+      },
+      {
+        "type": "field",
+        "outboundTag": "direct",
+        "domain": [
+          "geosite:private",
+          "geosite:cn"
+        ],
+        "ip": [
+          "geoip:cn"
+        ]
+      }
+    ],
+    "balancers": [
+      {
+        "tag": "default-balancer",
+        "selector": [
+          ${SELECTORS}
+          "default-proxy"
+        ],
+        "strategy": {
+          "type": "random"
+        }
+      }
+    ]
+  }
+}
