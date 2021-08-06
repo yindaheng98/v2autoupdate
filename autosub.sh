@@ -4,7 +4,7 @@
 # $3 是需要多少个outbound
 # $4 是在前多少个outbound里面选
 OUTBOUNDS=''
-SELECT=0
+TAGS=''
 for i in $(seq 1 $3); do
     UUID=$(cat /proc/sys/kernel/random/uuid)
     TEMP=/tmp/${UUID}.json
@@ -15,15 +15,16 @@ for i in $(seq 1 $3); do
     send "$(expr $RANDOM % $4)\n"
     expect "config has been written to"
 EOF
+    TAG="$TAG_PREFIX-$i"
     content=$(cat "$TEMP")
     eval "cat <<EOF
     $content" >"$TEMP"
     OUTBOUND=$(cat "$TEMP")
     rm "$TEMP"
     OUTBOUNDS="$OUTBOUND,$OUTBOUNDS"
+    TAGS="\"$TAG\",$TAGS"
 done
-SELECTORS="\"$TAG_PREFIX\","
-content=$(cat /templates/balancer.json)
+content=$(cat /templates/main.json)
 eval "cat <<EOF
 $content
 EOF" >"$2"

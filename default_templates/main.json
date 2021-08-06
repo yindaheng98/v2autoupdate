@@ -10,7 +10,7 @@
     }
   ],
   "outbounds": [
-    ${OUTBOUND}
+    ${OUTBOUNDS}
     {
       "tag": "direct",
       "protocol": "freedom",
@@ -22,7 +22,7 @@
     "rules": [
       {
         "type": "field",
-        "outboundTag": "${SELECTOR}",
+        "balancerTag": "default-balancer",
         "domain": [
           "geosite:tld-!cn",
           "geosite:geolocation-!cn"
@@ -39,7 +39,18 @@
           "geoip:cn"
         ]
       }
+    ],
+    "balancers": [
+      {
+        "tag": "default-balancer",
+        "selector": [
+          ${TAGS}
+          "default-proxy"
+        ],
+        "strategy": {
+          "type": "random"
+        }
+      }
     ]
   }
 }
-  
