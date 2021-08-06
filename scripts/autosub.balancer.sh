@@ -3,7 +3,6 @@
 # $2 是生成配置文件的路径
 # $3 是需要多少个outbound
 # $4 是在前多少个outbound里面选
-PREFIX='v2gen-balance'
 OUTBOUNDS=''
 SELECT=0
 for i in $(seq 1 $3); do
@@ -16,7 +15,6 @@ for i in $(seq 1 $3); do
     send "$(expr $RANDOM % $4)\n"
     expect "config has been written to"
 EOF
-    TAG_PREFIX="$PREFIX-$i-"
     content=$(cat "$TEMP")
     eval "cat <<EOF
     $content" >"$TEMP"
@@ -24,7 +22,7 @@ EOF
     rm "$TEMP"
     OUTBOUNDS="$OUTBOUND,$OUTBOUNDS"
 done
-SELECTORS="\"$PREFIX\","
+SELECTORS="\"$TAG_PREFIX\","
 content=$(cat /templates/balancer.json)
 eval "cat <<EOF
 $content

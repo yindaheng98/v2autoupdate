@@ -6,5 +6,6 @@ COPY templates /templates
 RUN apk add --no-cache expect && chmod +x /scripts/*
 ENV THREAD=16
 ENV COUNT=1
+ENV TAG_PREFIX='v2gen-'
 
 CMD [ "/usr/bin/v2ray", "-config", "/etc/v2ray/config.json" ]
