@@ -23,10 +23,10 @@ ENV HOW_MUCH_OUTBOUNDS=4
 ENV FROM_HOW_MUCH=8
 
 # v2gen的参数：使用多少个线程测量连接情况
-ENV THREAD=16
+ENV THREAD=3
 
 # v2gen的参数：测量多少次取平均值
-ENV COUNT=1
+ENV COUNT=3
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 

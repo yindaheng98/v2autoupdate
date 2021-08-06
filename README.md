@@ -2,6 +2,12 @@
 
 一个小小的docker镜像，在v2ray启动前自动获取vmess订阅信息、测量连接情况、并生成包含多个outbound的配置文件。可用于实现自动订阅+负载均衡。
 
+## 如何使用？
+
+```sh
+docker run --rm -it -p "1080:1080" -e "SUBSCRIBE_LINK=<你的订阅链接>" yindaheng98/v2autosub
+```
+
 ## vmess订阅信息是如何获取的？连接情况是如何测量的？
 
 基于[v2gen](https://github.com/iochen/v2gen)
@@ -13,7 +19,7 @@
 在[`autosub.sh`](autosub.sh)中：
 
 1. 首先，对于vmess订阅中的每个服务器，借助[v2gen](https://github.com/iochen/v2gen)的模板功能，用[`templates/outbound.json`](templates/outbound.json)模板生成单独的outbound配置
-2. 将每个单独的outbound配置拼接好后替换到[`templates/main.json`](templates/main.json)的`${OUTBOUNDS}`处，并将tag前缀替换到`${TAGS}`处
+2. 将每个单独的outbound配置拼接好后替换到[`templates/main.json`](templates/main.json)的`${OUTBOUNDS}`处，然后将生成的tags替换到`${TAGS}`处
 
 所以，在使用脚本时，如果想自定义输出的配置文件的形式，直接将你自己的模板文件挂载到docker容器中覆盖模板文件即可。
 
@@ -42,10 +48,4 @@ ENV THREAD=16
 
 # v2gen的参数：测量多少次取平均值
 ENV COUNT=1
-```
-
-## 如何使用？
-
-```sh
-docker run --rm -it -p "1080:1080" -e "SUBSCRIBE_LINK=<你的订阅链接>" yindaheng98/v2autosub
 ```
