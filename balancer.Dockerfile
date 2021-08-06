@@ -1,5 +1,5 @@
 FROM yindaheng98/v2autosub
-COPY entrypoint/balancer.sh /entrypoint.sh
+COPY entrypoints/balancer.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 # 订阅链接
