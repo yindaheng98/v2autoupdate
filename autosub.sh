@@ -15,7 +15,7 @@ for i in $(seq 1 $3); do
     send "$(expr $RANDOM % $4)\n"
     expect "config has been written to"
 EOF
-    TAG="$TAG_PREFIX-$i"
+    TAG="$TAG_PREFIX$i"
     content=$(cat "$TEMP")
     eval "cat <<EOF
     $content" >"$TEMP"
