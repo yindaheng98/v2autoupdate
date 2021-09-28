@@ -46,24 +46,24 @@ jobs:
         with:
           buildx-version: latest
 
-      - name: Build v2gen (with push)
+      - name: Build v2autosub (with push)
         env:
           DOCKER_USERNAME: ${{ github.actor }}
           DOCKERFILE_DIR: .
-          DOCKERFILE_PATH: ./v2gen.Dockerfile
-          DOCKER_IMG_NAME: v2gen
+          DOCKERFILE_PATH: ./v2autosub.Dockerfile
+          DOCKER_IMG_NAME: v2autosub
           DOCKER_TAG_NAME: latest
         run: |
           ${{ env.BUILDX }} \
           --file ${DOCKERFILE_PATH} ${DOCKERFILE_DIR} \
           --tag ${DOCKER_USERNAME}/${DOCKER_IMG_NAME}:${DOCKER_TAG_NAME}
 
-      - name: Build v2autosub (with push)
+      - name: Build v2autoupdate (with push)
         env:
           DOCKER_USERNAME: ${{ github.actor }}
           DOCKERFILE_DIR: .
           DOCKERFILE_PATH: ./Dockerfile
-          DOCKER_IMG_NAME: v2autosub
+          DOCKER_IMG_NAME: v2autoupdate
           DOCKER_TAG_NAME: latest
         run: |
           ${{ env.BUILDX }} \
